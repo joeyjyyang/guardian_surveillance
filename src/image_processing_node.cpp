@@ -6,31 +6,7 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <cv_bridge/cv_bridge.h>
 
-void imageCallback(const sensor_msgs::ImageConstPtr& msg)
-{
-  try
-  {
-    cv::imshow("view", cv_bridge::toCvShare(msg, "bgr8")->image);
-    cv::waitKey(30);
-  }
-  catch (cv_bridge::Exception& e)
-  {
-    ROS_ERROR("Could not convert from '%s' to 'bgr8'.", msg->encoding.c_str());
-  }
-}
-
-int main(int argc, char **argv)
-{
-  ros::init(argc, argv, "image_processing_node");
-  ros::NodeHandle nh;
-  cv::namedWindow("view");
-  cv::startWindowThread();
-  image_transport::ImageTransport it(nh);
-  image_transport::Subscriber sub = it.subscribe("raspicam_node/image", 1, imageCallback);
-  ros::spin();
-  cv::destroyWindow("view");
-}
-/*static const std::string OPENCV_WINDOW = "Image window";
+static const std::string OPENCV_WINDOW = "Image window";
 
 class ImageConverter
 {
@@ -88,4 +64,4 @@ int main(int argc, char** argv)
   ImageConverter ic;
   ros::spin();
   return 0;
-}*/
+}

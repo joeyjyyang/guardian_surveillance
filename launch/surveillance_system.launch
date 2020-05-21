@@ -1,0 +1,11 @@
+<launch>
+  
+  <arg name="enable_raw"	default="true"/>
+  
+  <include file="$(find raspicam_node)/launch/camerav2_1280x960.launch">
+    <arg name="enable_raw"	value="$(arg enable_raw)"/>
+  </include>
+
+  <node name="image_processing_node" pkg="guardian_surveillance" type="image_processing_node" respawn="false" output="screen"/>
+ 
+</launch>
