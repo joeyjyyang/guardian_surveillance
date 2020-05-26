@@ -6,28 +6,32 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <cv_bridge/cv_bridge.h>
 
+#include "guardian_surveillance/Object.h"
+
 static const std::string OPENCV_WINDOW = "Image window";
 
-class ImageConverter
+class ImageProcessor
 {
   ros::NodeHandle nh_;
   image_transport::ImageTransport it_;
   image_transport::Subscriber image_sub_;
   image_transport::Publisher image_pub_;
-
+  ros::Publisher object_pub_;
+  guardian_surveillance::Object object_msg_;
+ 
 public:
-  ImageConverter()
+  ImageProcessor()
     : it_(nh_)
   {
-    // Subscrive to input video feed and publish output video feed
     image_sub_ = it_.subscribe("/raspicam_node/image", 1,
-      &ImageConverter::imageCb, this);
+      &ImageProcessor::imageCb, this);
     image_pub_ = it_.advertise("/image_converter/output_video", 1);
+    object_pub_ = nh_.advertise<guardian_surveillance::Object>("/guardian_surveillance/object", 1);
 
     cv::namedWindow(OPENCV_WINDOW);
   }
 
-  ~ImageConverter()
+  ~ImageProcessor()
   {
     cv::destroyWindow(OPENCV_WINDOW);
   }
@@ -45,23 +49,26 @@ public:
       return;
     }
 
-    // Draw an example circle on the video stream
+    /* Draw an example circle on the video stream
     if (cv_ptr->image.rows > 60 && cv_ptr->image.cols > 60)
-      cv::circle(cv_ptr->image, cv::Point(50, 50), 10, CV_RGB(255,0,0));
+    cv::circle(cv_ptr->image, cv::Point(50, 50), 10, CV_RGB(255,0,0)); */
 
-    // Update GUI Window
     cv::imshow(OPENCV_WINDOW, cv_ptr->image);
     cv::waitKey(3);
 
-    // Output modified video stream
     image_pub_.publish(cv_ptr->toImageMsg());
+
+    object_msg_.stamp = ros::Time::now();
+    object_msg_.classification = "Human";
+    object_msg_.confidence = 0.99;
+    object_pub_.publish(object_msg_); 
   }
 };
 
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
-  ros::init(argc, argv, "image_processing_node");
-  ImageConverter ic;
+  ros::init(argc, argv, "image_processor_node");
+  ImageProcessor ip;
   ros::spin();
   return 0;
 }

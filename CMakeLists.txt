@@ -76,14 +76,14 @@ include_directories(
 
 # add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
-add_executable(image_processing_node src/image_processing_node.cpp)
+add_executable(image_processor_node src/image_processor_node.cpp)
 
 # set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME node PREFIX "")
 
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(image_processing_node
+target_link_libraries(image_processor_node
   ${catkin_LIBRARIES}
   ${OpenCV_LIBS}
 )
