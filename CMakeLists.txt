@@ -14,6 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   cv_bridge
   image_transport
+  message_generation
 )
 
 find_package(OpenCV REQUIRED)
@@ -23,11 +24,10 @@ find_package(OpenCV REQUIRED)
 # catkin_python_setup()
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
+add_message_files(
+  FILES
+  Object.msg
+)
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -44,11 +44,11 @@ find_package(OpenCV REQUIRED)
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-# DEPENDENCIES
-# sensor_msgs
-# std_msgs
-# )
+generate_messages(
+  DEPENDENCIES
+  sensor_msgs
+  std_msgs
+)
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
 # generate_dynamic_reconfigure_options(
@@ -59,7 +59,7 @@ find_package(OpenCV REQUIRED)
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES guardian_surveillance
-  CATKIN_DEPENDS roscpp rospy sensor_msgs std_msgs cv_bridge image_transport
+  CATKIN_DEPENDS roscpp rospy sensor_msgs std_msgs cv_bridge image_transport message_runtime
 #  DEPENDS system_lib
 )
 
