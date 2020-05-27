@@ -74,19 +74,24 @@ include_directories(
 #   src/${PROJECT_NAME}/guardian_surveillance.cpp
 # )
 
-# add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
 add_executable(image_processor_node src/image_processor_node.cpp)
 
 # set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME node PREFIX "")
 
-# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-## Specify libraries to link a library or executable target against
 target_link_libraries(image_processor_node
   ${catkin_LIBRARIES}
   ${OpenCV_LIBS}
 )
+
+# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+add_executable(intruder_alerter_node src/intruder_alerter_node.cpp)
+
+target_link_libraries(intruder_alerter_node
+  ${catkin_LIBRARIES}
+)
+
+# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
