@@ -1,13 +1,14 @@
 #include <ros/ros.h>
 
+#include "guardian_surveillance/Object.h"
+
 class IntruderAlerter
 {
   ros::NodeHandle nh_;
-  ros::Subscriber object_pub_;
+  ros::Subscriber object_sub_;
  
 public:
   IntruderAlerter()
-    : it_(nh_)
   {
     object_sub_ = nh_.subscribe("/guardian_surveillance/object", 1, &IntruderAlerter::objectCb, this);
   }
