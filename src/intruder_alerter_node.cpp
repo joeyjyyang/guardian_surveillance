@@ -8,7 +8,7 @@ class IntruderAlerter
   ros::Subscriber object_sub_;
  
 public:
-  IntruderAlerter()
+  IntruderAlerter(const ros::NodeHandle& nh) : nh_(nh)
   {
     object_sub_ = nh_.subscribe("/guardian_surveillance/object", 1, &IntruderAlerter::objectCb, this);
   }
@@ -26,7 +26,8 @@ public:
 int main(int argc, char* argv[])
 {
   ros::init(argc, argv, "intruder_alerter_node");
-  IntruderAlerter ia;
+  ros::NodeHandle nh;
+  IntruderAlerter ia(nh);
   ros::spin();
   return 0;
 }

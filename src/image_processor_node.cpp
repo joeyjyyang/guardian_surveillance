@@ -20,8 +20,7 @@ class ImageProcessor
   guardian_surveillance::Object object_msg_;
  
 public:
-  ImageProcessor()
-    : it_(nh_)
+  ImageProcessor(const ros::NodeHandle& nh) : it_(nh), nh_(nh)
   {
     image_sub_ = it_.subscribe("/raspicam_node/image", 1,
       &ImageProcessor::imageCb, this);
@@ -68,7 +67,8 @@ public:
 int main(int argc, char* argv[])
 {
   ros::init(argc, argv, "image_processor_node");
-  ImageProcessor ip;
+  ros::NodeHandle nh;
+  ImageProcessor ip(nh);
   ros::spin();
   return 0;
 }
