@@ -19,7 +19,11 @@ public:
 
   void objectCb(const guardian_surveillance::Object::ConstPtr& object_msg)
   {
-    ROS_INFO("test"); 
+    if (object_msg->classification == "Human" && object_msg->confidence >= 0.9)
+    {
+      /* bluetooth ping phone */
+      ROS_INFO("WARNING: INTRUDER DETECTED!"); 
+    }
   }
 };
 
