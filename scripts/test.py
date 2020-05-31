@@ -1,16 +1,15 @@
 import bluetooth
 
-target_name = "My Phone"
-target_address = None
+print("performing inquiry...")
 
-nearby_devices = bluetooth.discover_devices()
+nearby_devices = bluetooth.discover_devices(
+        duration=8, lookup_names=True, flush_cache=True, lookup_class=False)
 
-for bdaddr in nearby_devices:
-    if target_name == bluetooth.lookup_name( bdaddr ):
-        target_address = bdaddr
-        break
+print("found %d devices" % len(nearby_devices))
 
-if target_address is not None:
-    print("found target bluetooth device with address ", target_address)
-else:
-    print("could not find target bluetooth device nearby")
+for addr, name in nearby_devices:
+    try:
+        print("  %s - %s" % (addr, name))
+    except UnicodeEncodeError:
+        print("  %s - %s" % (addr, name.encode('utf-8', 'replace')))
+
