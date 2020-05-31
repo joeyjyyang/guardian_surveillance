@@ -1,7 +1,7 @@
 # guardian_surveillance
 **A lightweight and intelligent surveillence system embedded on the Raspberry Pi and implemented in the ROS ecosystem.**
 ## Overview
-Guardian Surveillance is an affordable and portable surveillance system that combines computer vision and IoT device communication to deliver reliable and punctual security to any location that the user desires. Image processing techniques are deployed on real-time camera footage from the Raspberry Pi Camera Module V2 to detect, recognize, and identify potential intruders; the user's smartphone is subsequently alerted via Bluetooth.
+Guardian Surveillance is an affordable and portable surveillance system that combines computer vision and IoT device communication to deliver reliable and punctual security to any location that the user desires. Image processing techniques are deployed on real-time camera footage from the Raspberry Pi Camera Module V2 to detect, recognize, and identify potential intruders; the user's smartphone is subsequently alerted.
 ## Installation
 ### Install from Git Repository
 ```
