@@ -1,8 +1,15 @@
 import rospy
 from guardian_surveillance.msg import Object
 
+from twilio.rest import Client
+
 import smtplib
 from email.message import EmailMessage
+
+account_sid = "" 
+auth_token = ""
+
+#client = Client(account_sid, auth_token)
 
 sender_email = "guardiansurveillance.ai@gmail.com"
 sender_password = "t2vqh97u"
@@ -25,7 +32,9 @@ server.quit()
 
 def objectCb(object_msg):
 	if (object_msg.classification "Human" == and object_msg.confidence == 0.99):
-		rospy.loginfo("test")
+		pass 
+	else:
+		rospy.loginfo("ALERT: INTRUDER DETECTED BY GUARDIAN SURVEILLANCE")	
 
 def intruderAlerter():
     rospy.init_node("intruder_alerter_node", anonymous = True)
