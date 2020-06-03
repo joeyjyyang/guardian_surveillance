@@ -1,13 +1,14 @@
 import rospy
 from guardian_surveillance.msg import Object
 
+import os
 from twilio.rest import Client
 
 import smtplib
 from email.message import EmailMessage
 
-account_sid = "AC06aefadef3a9e078b57b83ac9aa607cd" 
-auth_token = "28aef006228bd6e96939941b78e35fa1"
+account_sid = os.environ['TWILIO_ACCOUNT_SID']
+auth_token = os.environ['TWILIO_AUTH_TOKEN']
 
 client = Client(account_sid, auth_token)
 client.messages.create(
@@ -36,7 +37,7 @@ server.sendmail(sender_email, receiver_email, msg.as_string())
 server.quit()
 
 def objectCb(object_msg):
-  if (object_msg.classification "Human" == and object_msg.confidence == 0.99):
+  if (object_msg.classification == "Human" and object_msg.confidence == 0.99):
     pass 
   else:
     rospy.loginfo("ALERT: INTRUDER DETECTED BY GUARDIAN SURVEILLANCE")	
