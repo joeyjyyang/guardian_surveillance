@@ -83,14 +83,12 @@ target_link_libraries(image_processor_node
   ${OpenCV_LIBS}
 )
 
-# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(image_processor_node guardian_surveillance_generate_messages_cpp)
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
 catkin_install_python(PROGRAMS
-  scripts/intruder_alerter_node.py
+  scripts/intruder_alerter_node
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
