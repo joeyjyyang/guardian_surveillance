@@ -19,8 +19,8 @@
 
 int main(int argc, char * argv[])
 {
-        std::string account_sid = "AC33a76c0fcf93b551f413f7bce2096b02";
-        std::string auth_token = "2b8cb36fbd7ae06ddb62c4a726ad1708";
+        std::string account_sid = "";
+        std::string auth_token = "";
         std::string message = "testing";
         std::string from_number = "+16473720640";
         std::string to_number = "+16479663926";
