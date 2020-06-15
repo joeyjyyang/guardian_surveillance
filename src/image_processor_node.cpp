@@ -4,11 +4,20 @@
 #include <sensor_msgs/image_encodings.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <opencv2/objdetect.hpp>
+#include <opencv2/videoio.hpp>
 #include <cv_bridge/cv_bridge.h>
+#include <iostream>
+#include <stdio.h>
 
 #include "guardian_surveillance/Object.h"
 
-static const std::string OPENCV_WINDOW = "Image window";
+std::string face_cascade_name = "haarcascade_frontalface_alt.xml";
+std::string eyes_cascade_name = "haarcascade_eye_tree_eyeglasses.xml";
+cv::CascadeClassifier face_cascade;
+cv::CascadeClassifier eyes_cascade;
+
+static const std::string OPENCV_WINDOW = "Guardian Surveillance";
 
 class ImageProcessor
 {
@@ -49,8 +58,12 @@ public:
     }
 
     /* Draw an example circle on the video stream*/
-    (cv_ptr->image.rows > 60 && cv_ptr->image.cols > 60);
-    cv::circle(cv_ptr->image, cv::Point(50, 50), 10, CV_RGB(255,0,0)); 
+    /*(cv_ptr->image.rows > 60 && cv_ptr->image.cols > 60);
+    cv::circle(cv_ptr->image, cv::Point(50, 50), 10, CV_RGB(255,0,0)); */
+    
+    cv::Mat frame_gray;
+    cv::cvtColor(cv_ptr->image, frame_gray, cv::COLOR_BGR2GRAY);
+    cv::equalizeHist(frame_gray, frame_gray);
 
     cv::imshow(OPENCV_WINDOW, cv_ptr->image);
     cv::waitKey(3);
@@ -66,6 +79,12 @@ public:
 
 int main(int argc, char* argv[])
 {
+  if ( !face_cascade.load(face_cascade_name))
+  {
+    std::cout << "Error" << std::endl;
+    return -1;
+  }
+
   ros::init(argc, argv, "image_processor_node");
   ros::NodeHandle nh;
   ImageProcessor ip(nh);

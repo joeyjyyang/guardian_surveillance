@@ -7,7 +7,7 @@
   </include>
 
   <node name="image_processor_node" pkg="guardian_surveillance" type="image_processor_node" respawn="false" output="screen"/>
-  
+<!--  
   <node name="intruder_alerter_node" pkg="guardian_surveillance" type="intruder_alerter_node" respawn="false" output="screen"/>
- 
+ -->
 </launch>
