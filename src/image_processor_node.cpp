@@ -13,8 +13,8 @@
 
 #include "guardian_surveillance/Object.h"
 
-std::string face_cascade_name = "haarcascade_frontalface_alt.xml";
-std::string eyes_cascade_name = "haarcascade_eye_tree_eyeglasses.xml";
+std::string face_cascade_name = "/opt/ros/kinetic/share/OpenCV-3.3.1-dev/haarcascades/haarcascade_frontalface_alt.xml";
+std::string eyes_cascade_name = "/opt/ros/kinetic/share/OpenCV-3.3.1-dev/haarcascades/haarcascade_eye_tree_eyeglasses.xml";
 cv::CascadeClassifier face_cascade;
 cv::CascadeClassifier eyes_cascade;
 
@@ -77,11 +77,11 @@ public:
 int main(int argc, char* argv[])
 {
 
-  /*if ( !face_cascade.load(face_cascade_name))
+  if (!face_cascade.load(face_cascade_name) || !eyes_cascade.load(eyes_cascade_name))
   {
-    std::cout << "Error" << std::endl;
+    std::cout << "Error: Unable to locate Haar Cascade xml files!" << std::endl;
     return -1;
-  }*/
+  }
 
   ros::init(argc, argv, "image_processor_node");
   ros::NodeHandle nh;
