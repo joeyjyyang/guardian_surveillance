@@ -2,11 +2,12 @@
 #include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
 #include <sensor_msgs/image_encodings.h>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
+
+#include <opencv2/imgproc.hpp>
+#include <opencv2/highgui.hpp>
 #include <opencv2/objdetect.hpp>
 #include <opencv2/videoio.hpp>
-#include <cv_bridge/cv_bridge.h>
+
 #include <iostream>
 #include <stdio.h>
 
@@ -57,10 +58,6 @@ public:
       return;
     }
 
-    /* Draw an example circle on the video stream*/
-    /*(cv_ptr->image.rows > 60 && cv_ptr->image.cols > 60);
-    cv::circle(cv_ptr->image, cv::Point(50, 50), 10, CV_RGB(255,0,0)); */
-    
     cv::Mat frame_gray;
     cv::cvtColor(cv_ptr->image, frame_gray, cv::COLOR_BGR2GRAY);
     cv::equalizeHist(frame_gray, frame_gray);
@@ -79,11 +76,12 @@ public:
 
 int main(int argc, char* argv[])
 {
-  if ( !face_cascade.load(face_cascade_name))
+
+  /*if ( !face_cascade.load(face_cascade_name))
   {
     std::cout << "Error" << std::endl;
     return -1;
-  }
+  }*/
 
   ros::init(argc, argv, "image_processor_node");
   ros::NodeHandle nh;

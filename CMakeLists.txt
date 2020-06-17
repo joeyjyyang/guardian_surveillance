@@ -80,7 +80,7 @@ add_executable(image_processor_node src/image_processor_node.cpp)
 
 target_link_libraries(image_processor_node
   ${catkin_LIBRARIES}
-  ${OpenCV_LIBS}
+  ${OpenCV_LIBRARIES}
 )
 
 add_dependencies(image_processor_node guardian_surveillance_generate_messages_cpp)
