@@ -62,6 +62,25 @@ public:
     cv::cvtColor(cv_ptr->image, frame_gray, cv::COLOR_BGR2GRAY);
     cv::equalizeHist(frame_gray, frame_gray);
 
+    std::vector<cv::Rect> faces;
+    face_cascade.detectMultiScale(frame_gray, faces);
+    for (size_t i = 0; i < faces.size(); i++)
+    {
+      cv::Point center(faces[i].x + faces[i].width/2, faces[i].y + faces[i].height/2);
+      cv::ellipse(cv_ptr->image, center, cv::Size(faces[i].width/2, faces[i].height/2), 0, 0, 360, cv::Scalar(255, 0, 255), 4);
+      cv::Mat faceROI = frame_gray(faces[i]);
+      
+      std::vector<cv::Rect> eyes;
+      eyes_cascade.detectMultiScale(faceROI, eyes);
+        
+      for (size_t j = 0; j < eyes.size(); j++)
+      {
+        cv::Point eye_center( faces[i].x + eyes[j].x + eyes[j].width/2, faces[i].y + eyes[j].y + eyes[j].height/2);
+        int radius = cvRound((eyes[j].width + eyes[j].height)*0.25);
+        cv::circle(cv_ptr->image, eye_center, radius, cv::Scalar( 255, 0, 0 ), 4);
+      }
+    }
+
     cv::imshow(OPENCV_WINDOW, cv_ptr->image);
     cv::waitKey(3);
 
