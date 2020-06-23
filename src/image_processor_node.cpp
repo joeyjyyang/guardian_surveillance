@@ -14,9 +14,7 @@
 #include "guardian_surveillance/Object.h"
 
 std::string face_cascade_name = "/opt/ros/kinetic/share/OpenCV-3.3.1-dev/haarcascades/haarcascade_frontalface_alt.xml";
-std::string eyes_cascade_name = "/opt/ros/kinetic/share/OpenCV-3.3.1-dev/haarcascades/haarcascade_eye_tree_eyeglasses.xml";
 cv::CascadeClassifier face_cascade;
-cv::CascadeClassifier eyes_cascade;
 
 static const std::string OPENCV_WINDOW = "Guardian Surveillance";
 
@@ -25,7 +23,7 @@ class ImageProcessor
   ros::NodeHandle nh_;
   image_transport::ImageTransport it_;
   image_transport::Subscriber image_sub_;
-  image_transport::Publisher image_pub_;
+  //image_transport::Publisher image_pub_;
   ros::Publisher object_pub_;
   guardian_surveillance::Object object_msg_;
  
@@ -34,8 +32,8 @@ public:
   {
     image_sub_ = it_.subscribe("/raspicam_node/image", 1,
       &ImageProcessor::imageCb, this);
-    image_pub_ = it_.advertise("/image_converter/output_video", 1);
-    object_pub_ = nh_.advertise<guardian_surveillance::Object>("/guardian_surveillance/object", 1);
+    //image_pub_ = it_.advertise("/image_converter/output_video", 1);
+   // object_pub_ = nh_.advertise<guardian_surveillance::Object>("/guardian_surveillance/object", 1);
 
     cv::namedWindow(OPENCV_WINDOW);
   }
@@ -69,34 +67,24 @@ public:
       cv::Point center(faces[i].x + faces[i].width/2, faces[i].y + faces[i].height/2);
       cv::ellipse(cv_ptr->image, center, cv::Size(faces[i].width/2, faces[i].height/2), 0, 0, 360, cv::Scalar(255, 0, 255), 4);
       cv::Mat faceROI = frame_gray(faces[i]);
-      
-      std::vector<cv::Rect> eyes;
-      eyes_cascade.detectMultiScale(faceROI, eyes);
-        
-      for (size_t j = 0; j < eyes.size(); j++)
-      {
-        cv::Point eye_center( faces[i].x + eyes[j].x + eyes[j].width/2, faces[i].y + eyes[j].y + eyes[j].height/2);
-        int radius = cvRound((eyes[j].width + eyes[j].height)*0.25);
-        cv::circle(cv_ptr->image, eye_center, radius, cv::Scalar( 255, 0, 0 ), 4);
-      }
     }
-
+	
     cv::imshow(OPENCV_WINDOW, cv_ptr->image);
     cv::waitKey(3);
 
-    image_pub_.publish(cv_ptr->toImageMsg());
+    //image_pub_.publish(cv_ptr->toImageMsg());
 
-    object_msg_.stamp = ros::Time::now();
+    /*object_msg_.stamp = ros::Time::now();
     object_msg_.classification = "Human";
     object_msg_.confidence = 0.99;
-    object_pub_.publish(object_msg_); 
+    object_pub_.publish(object_msg_); */
   }
 };
 
 int main(int argc, char* argv[])
 {
 
-  if (!face_cascade.load(face_cascade_name) || !eyes_cascade.load(eyes_cascade_name))
+  if (!face_cascade.load(face_cascade_name))
   {
     std::cout << "Error: Unable to locate Haar Cascade xml files!" << std::endl;
     return -1;
