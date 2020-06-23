@@ -1,5 +1,4 @@
 #include <ros/ros.h>
-#include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
 #include <sensor_msgs/image_encodings.h>
 
@@ -21,20 +20,13 @@ static const std::string OPENCV_WINDOW = "Guardian Surveillance";
 class ImageProcessor
 {
   ros::NodeHandle nh_;
-  image_transport::ImageTransport it_;
-  image_transport::Subscriber image_sub_;
-  //image_transport::Publisher image_pub_;
-  ros::Publisher object_pub_;
+  ros::Subscriber image_sub_;
   guardian_surveillance::Object object_msg_;
  
 public:
-  ImageProcessor(const ros::NodeHandle& nh) : it_(nh), nh_(nh)
+  ImageProcessor(const ros::NodeHandle& nh) : nh_(nh)
   {
-    image_sub_ = it_.subscribe("/raspicam_node/image", 1,
-      &ImageProcessor::imageCb, this);
-    //image_pub_ = it_.advertise("/image_converter/output_video", 1);
-   // object_pub_ = nh_.advertise<guardian_surveillance::Object>("/guardian_surveillance/object", 1);
-
+    image_sub_ = nh_.subscribe("/raspicam_node/image/compressed", 1, &ImageProcessor::imageCb, this);
     cv::namedWindow(OPENCV_WINDOW);
   }
 
@@ -43,21 +35,12 @@ public:
     cv::destroyWindow(OPENCV_WINDOW);
   }
 
-  void imageCb(const sensor_msgs::ImageConstPtr& msg)
+  void imageCb(const sensor_msgs::CompressedImageConstPtr& msg)
   {
-    cv_bridge::CvImagePtr cv_ptr;
-    try
-    {
-      cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
-    }
-    catch (cv_bridge::Exception& e)
-    {
-      ROS_ERROR("cv_bridge exception: %s", e.what());
-      return;
-    }
+    cv::Mat cv_image = cv::imdecode(cv::Mat(msg->data), 1); 
 
     cv::Mat frame_gray;
-    cv::cvtColor(cv_ptr->image, frame_gray, cv::COLOR_BGR2GRAY);
+    cv::cvtColor(cv_image, frame_gray, cv::COLOR_BGR2GRAY);
     cv::equalizeHist(frame_gray, frame_gray);
 
     std::vector<cv::Rect> faces;
@@ -65,19 +48,12 @@ public:
     for (size_t i = 0; i < faces.size(); i++)
     {
       cv::Point center(faces[i].x + faces[i].width/2, faces[i].y + faces[i].height/2);
-      cv::ellipse(cv_ptr->image, center, cv::Size(faces[i].width/2, faces[i].height/2), 0, 0, 360, cv::Scalar(255, 0, 255), 4);
+      cv::ellipse(cv_image, center, cv::Size(faces[i].width/2, faces[i].height/2), 0, 0, 360, cv::Scalar(255, 0, 255), 4);
       cv::Mat faceROI = frame_gray(faces[i]);
     }
 	
-    cv::imshow(OPENCV_WINDOW, cv_ptr->image);
+    cv::imshow(OPENCV_WINDOW, cv_image);
     cv::waitKey(3);
-
-    //image_pub_.publish(cv_ptr->toImageMsg());
-
-    /*object_msg_.stamp = ros::Time::now();
-    object_msg_.classification = "Human";
-    object_msg_.confidence = 0.99;
-    object_pub_.publish(object_msg_); */
   }
 };
 
