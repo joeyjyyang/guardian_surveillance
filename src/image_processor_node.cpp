@@ -22,9 +22,11 @@ class ImageProcessor
   ros::NodeHandle nh_;
   ros::Subscriber image_sub_;
   guardian_surveillance::Object object_msg_;
+  std::vector<cv::Rect> faces_;
+  int face_count_;
  
 public:
-  ImageProcessor(const ros::NodeHandle& nh) : nh_(nh)
+  ImageProcessor(const ros::NodeHandle& nh) : nh_(nh), face_count_(0)
   {
     image_sub_ = nh_.subscribe("/raspicam_node/image/compressed", 1, &ImageProcessor::imageCb, this);
     cv::namedWindow(OPENCV_WINDOW);
@@ -43,13 +45,22 @@ public:
     cv::cvtColor(cv_image, frame_gray, cv::COLOR_BGR2GRAY);
     cv::equalizeHist(frame_gray, frame_gray);
 
-    std::vector<cv::Rect> faces;
-    face_cascade.detectMultiScale(frame_gray, faces);
-    for (size_t i = 0; i < faces.size(); i++)
+    face_cascade.detectMultiScale(frame_gray, faces_);
+    
+    if (faces_.empty()) 
     {
-      cv::Point center(faces[i].x + faces[i].width/2, faces[i].y + faces[i].height/2);
-      cv::ellipse(cv_image, center, cv::Size(faces[i].width/2, faces[i].height/2), 0, 0, 360, cv::Scalar(255, 0, 255), 4);
-      cv::Mat faceROI = frame_gray(faces[i]);
+      face_count_ = 0;
+    }
+    if (face_count_ != faces_.size())
+    {
+      face_count_ = faces_.size();
+      std::cout << "Warning: " << face_count_ << " Intruders Detected!" << std::endl;
+    }
+    for (size_t i = 0; i < faces_.size(); i++)
+    {
+      cv::Point center(faces_[i].x + faces_[i].width/2, faces_[i].y + faces_[i].height/2);
+      cv::ellipse(cv_image, center, cv::Size(faces_[i].width/2, faces_[i].height/2), 0, 0, 360, cv::Scalar(255, 0, 255), 4);
+      cv::Mat faceROI = frame_gray(faces_[i]);
     }
 	
     cv::imshow(OPENCV_WINDOW, cv_image);
