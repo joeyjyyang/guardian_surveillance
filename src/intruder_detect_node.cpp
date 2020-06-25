@@ -77,7 +77,7 @@ int main(int argc, char* argv[])
     return -1;
   }
 
-  ros::init(argc, argv, "image_processor_node");
+  ros::init(argc, argv, "intruder_detect_node");
   ros::NodeHandle nh;
   ImageProcessor ip(nh);
   ros::spin();
