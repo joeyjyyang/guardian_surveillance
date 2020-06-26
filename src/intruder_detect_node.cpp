@@ -60,7 +60,6 @@ public:
     {
       cv::Point center(faces_[i].x + faces_[i].width/2, faces_[i].y + faces_[i].height/2);
       cv::ellipse(cv_image, center, cv::Size(faces_[i].width/2, faces_[i].height/2), 0, 0, 360, cv::Scalar(255, 0, 255), 4);
-      cv::Mat faceROI = frame_gray(faces_[i]);
     }
 	
     cv::imshow(OPENCV_WINDOW, cv_image);

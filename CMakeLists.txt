@@ -13,7 +13,6 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   std_msgs
   cv_bridge
-  image_transport
   message_generation
 )
 
@@ -59,7 +58,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES guardian_surveillance
-  CATKIN_DEPENDS roscpp rospy sensor_msgs std_msgs cv_bridge image_transport message_runtime
+  CATKIN_DEPENDS roscpp rospy sensor_msgs std_msgs message_runtime cv_bridge
 #  DEPENDS system_lib
 )
 
