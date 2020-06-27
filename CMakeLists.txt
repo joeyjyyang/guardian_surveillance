@@ -11,11 +11,9 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   sensor_msgs
-  # std_msgs
   cv_bridge
   raspicam_node
   image_view
-  # message_generation
 )
 
 find_package(OpenCV REQUIRED)
@@ -60,7 +58,7 @@ find_package(OpenCV REQUIRED)
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES guardian_surveillance
-  CATKIN_DEPENDS roscpp rospy sensor_msgs std_msgs cv_bridge raspicam_node image_view #message_runtime
+  CATKIN_DEPENDS roscpp rospy sensor_msgs cv_bridge raspicam_node image_view
 #  DEPENDS system_lib
 )
 
