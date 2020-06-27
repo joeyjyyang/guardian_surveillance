@@ -11,11 +11,11 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   sensor_msgs
-  std_msgs
+  # std_msgs
   cv_bridge
-  message_generation
   raspicam_node
   image_view
+  # message_generation
 )
 
 find_package(OpenCV REQUIRED)
@@ -25,10 +25,10 @@ find_package(OpenCV REQUIRED)
 # catkin_python_setup()
 
 ## Generate messages in the 'msg' folder
-add_message_files(
-  FILES
-  Object.msg
-)
+#add_message_files(
+#  FILES
+#  Object.msg
+#)
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -45,11 +45,11 @@ add_message_files(
 # )
 
 ## Generate added messages and services with any dependencies listed here
-generate_messages(
-  DEPENDENCIES
-  sensor_msgs
-  std_msgs
-)
+#generate_messages(
+  #DEPENDENCIES
+  #sensor_msgs
+  # std_msgs
+#)
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
 # generate_dynamic_reconfigure_options(
@@ -60,7 +60,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES guardian_surveillance
-  CATKIN_DEPENDS roscpp rospy sensor_msgs std_msgs cv_bridge message_runtime raspicam_node image_view
+  CATKIN_DEPENDS roscpp rospy sensor_msgs std_msgs cv_bridge raspicam_node image_view #message_runtime
 #  DEPENDS system_lib
 )
 
@@ -84,12 +84,12 @@ target_link_libraries(intruder_detect_node
   ${OpenCV_LIBRARIES}
 )
 
-add_dependencies(intruder_detect_node guardian_surveillance_generate_messages_cpp)
+#add_dependencies(intruder_detect_node guardian_surveillance_generate_messages_cpp)
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
-catkin_install_python(PROGRAMS
-  #scripts/email_alert_node
+catkin_install_python(
+  PROGRAMS scripts/email_alert_node
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

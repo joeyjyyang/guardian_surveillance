@@ -10,8 +10,6 @@
 #include <iostream>
 #include <stdio.h>
 
-#include "guardian_surveillance/Object.h"
-
 std::string face_cascade_name = "/opt/ros/kinetic/share/OpenCV-3.3.1-dev/haarcascades/haarcascade_frontalface_alt.xml";
 cv::CascadeClassifier face_cascade;
 
@@ -21,7 +19,8 @@ class ImageProcessor
 {
   ros::NodeHandle nh_;
   ros::Subscriber image_sub_;
-  guardian_surveillance::Object object_msg_;
+  ros::ServiceClient image_saver_client_;
+  //image_view::image_saver image_saver_service_;
   std::vector<cv::Rect> faces_;
   int face_count_;
  
@@ -29,6 +28,7 @@ public:
   ImageProcessor(const ros::NodeHandle& nh) : nh_(nh), face_count_(0)
   {
     image_sub_ = nh_.subscribe("/raspicam_node/image/compressed", 1, &ImageProcessor::imageCb, this);
+    //image_saver_client_ = nh_.serviceClient<image_view::image_saver>("save");
     cv::namedWindow(OPENCV_WINDOW);
   }
 
@@ -54,7 +54,11 @@ public:
     if (face_count_ != faces_.size())
     {
       face_count_ = faces_.size();
-      std::cout << "Warning: " << face_count_ << " Intruders Detected!" << std::endl;
+      ROS_INFO("Warning! Intruder(s) Detected!");
+      /*if (image_saver_client_.call(image_saver_service_))
+      {
+        ROS_INFO("image saved");
+      }*/
     }
     for (size_t i = 0; i < faces_.size(); i++)
     {
