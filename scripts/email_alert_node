@@ -4,42 +4,41 @@ import rospy
 from std_srvs.srv import Empty
 
 import smtplib
-"""
+from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
-from email.mime.multipart import MIMEMultipart
-
-img = open(ImgFileName, "rb").read()
-
-
-sender_email = "guardiansurveillance.ai@gmail.com"
-sender_password = "t2vqh97u"
-receiver_email = "joeyyang.ai@gmail.com"
-starttls_port = 587
-smtp_server = "smtp.gmail.com"
-
-msg = MIMEMultipart()
-msg["X-Priority"] = "1"
-msg["From"] = sender_email
-msg["To"] = receiver_email
-msg["Subject"] = "Urgent!"
-
-text = MIMEText("Warning! Intruder(s) Detected!")
-msg.attach(text)
-image = MIMEImage(img, name=os.path.basename(ImgFileName))
-msg.attach(image)
-
-server = smtplib.SMTP(smtp_server, starttls_port)
-server.starttls()
-server.login(sender_email, sender_password)
-server.sendmail(sender_email, receiver_email, msg.as_string())
-server.quit()"""
 
 def emailAlert():
     rospy.init_node("email_alert_node")
-    rospy.wait_for_service("/image_saver/save")
+    """rospy.wait_for_service("/image_saver/save")
     save_image = rospy.ServiceProxy("/image_saver/save", Empty)
-    image = save_image()
+    image = save_image()"""
 
 if __name__ == '__main__':
     emailAlert()
+    ImgFileName = "/home/ubuntu/catkin_ws/src/guardian_surveillance/scripts/image.jpg"
+
+    sender_email = "guardiansurveillance.ai@gmail.com"
+    sender_password = "t2vqh97u"
+    receiver_email = "joeyyang.ai@gmail.com"
+    starttls_port = 587
+    smtp_server = "smtp.gmail.com"
+
+    msg = MIMEMultipart()
+    msg["X-Priority"] = "1"
+    msg["From"] = sender_email
+    msg["To"] = receiver_email
+    msg["Subject"] = "Urgent!"
+
+    text = MIMEText("Warning! Intruder(s) Detected!")
+    msg.attach(text)
+    image = MIMEImage(open(ImgFileName, "rb").read())
+    msg.attach(image)
+
+    server = smtplib.SMTP(smtp_server, starttls_port)
+    server.starttls()
+    server.login(sender_email, sender_password)
+    server.sendmail(sender_email, receiver_email, msg.as_string())
+    server.quit()
+
+
