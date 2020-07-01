@@ -7,6 +7,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   sensor_msgs
+  std_srvs
   cv_bridge
   raspicam_node
   image_view
@@ -25,19 +26,19 @@ find_package(OpenCV REQUIRED)
 #)
 
 ## Generate services in the 'srv' folder
-add_service_files(
+#add_service_files(
 ##  DIRECTORY 
 #  FILES
 #   Service1.srv
 #   Service2.srv
-)
+#)
 
 ## Generate added messages and services with any dependencies listed here
-generate_messages(
+#generate_messages(
   #DEPENDENCIES
   #sensor_msgs
   # std_msgs
-)
+#)
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
 # generate_dynamic_reconfigure_options(
@@ -48,7 +49,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES guardian_surveillance
-  CATKIN_DEPENDS roscpp rospy sensor_msgs cv_bridge raspicam_node image_view message_runtime
+  CATKIN_DEPENDS roscpp rospy sensor_msgs std_srvs cv_bridge raspicam_node image_view message_runtime
 #  DEPENDS system_lib
 )
 
