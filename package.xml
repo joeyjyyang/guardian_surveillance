@@ -23,6 +23,7 @@
   <build_depend>OpenCV</build_depend>
   <build_depend>raspicam_node</build_depend>
   <build_depend>image_view</build_depend>
+  <build_depend>message_generation</build_depend>
 
   <exec_depend>roscpp</exec_depend>
   <exec_depend>rospy</exec_depend>
@@ -32,4 +33,5 @@
   <exec_depend>OpenCV</exec_depend>
   <exec_depend>raspicam_node</exec_depend>
   <exec_depend>image_view</exec_depend>
+  <exec_depend>message_runtime</exec_depend>
 </package>
