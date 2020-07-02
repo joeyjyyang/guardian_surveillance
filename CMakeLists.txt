@@ -68,7 +68,7 @@ target_link_libraries(intruder_detect_node
   ${OpenCV_LIBRARIES}
 )
 
-#add_dependencies(intruder_detect_node guardian_surveillance_generate_messages_cpp)
+add_dependencies(intruder_detect_node guardian_surveillance_generate_messages_cpp)
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination

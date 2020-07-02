@@ -1,6 +1,7 @@
 #include <ros/ros.h>
 #include <cv_bridge/cv_bridge.h>
 #include <sensor_msgs/image_encodings.h>
+#include <std_srvs/Empty.h>
 
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
@@ -19,8 +20,8 @@ class ImageProcessor
 {
   ros::NodeHandle nh_;
   ros::Subscriber image_sub_;
-  ros::ServiceClient image_saver_client_;
-  //image_view::image_saver image_saver_service_;
+  ros::ServiceClient email_alert_client_;
+  std_srvs::Empty email_alert_srv_;
   std::vector<cv::Rect> faces_;
   int face_count_;
  
@@ -28,7 +29,7 @@ public:
   ImageProcessor(const ros::NodeHandle& nh) : nh_(nh), face_count_(0)
   {
     image_sub_ = nh_.subscribe("/raspicam_node/image/compressed", 1, &ImageProcessor::imageCb, this);
-    //image_saver_client_ = nh_.serviceClient<image_view::image_saver>("save");
+    email_alert_client_ = nh_.serviceClient<std_srvs::Empty>("email_alert");
     cv::namedWindow(OPENCV_WINDOW);
   }
 
@@ -47,19 +48,20 @@ public:
 
     face_cascade.detectMultiScale(frame_gray, faces_);
     
-    if (faces_.empty()) 
-    {
-      face_count_ = 0;
-    }
-    if (face_count_ != faces_.size())
+    if (!faces_.empty() && faces_.size() != face_count_)
     {
       face_count_ = faces_.size();
       ROS_INFO("Warning! Intruder(s) Detected!");
-      /*if (image_saver_client_.call(image_saver_service_))
+      if (email_alert_client_.call(email_alert_srv_))
       {
-        ROS_INFO("image saved");
-      }*/
+        ROS_INFO("IMAGE SAVED");
+      }
+      else
+      {
+        ROS_ERROR("FAILED TO CALL SERVICE email_alert");
+      }
     }
+    
     for (size_t i = 0; i < faces_.size(); i++)
     {
       cv::Point center(faces_[i].x + faces_[i].width/2, faces_[i].y + faces_[i].height/2);
