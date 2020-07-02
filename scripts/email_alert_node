@@ -28,8 +28,8 @@ msg_.attach(text_)
 
 def getImageFile():
     all_image_files = glob.glob("/home/ubuntu/catkin_ws/src/guardian_surveillance/media/*.jpg")
-    image_file = max(all_image_files, key=os.path.getctime)   
-    return image_file
+    image_file_ = max(all_image_files, key=os.path.getctime)   
+    return image_file_
 
 def sendEmail(image):
     msg_.attach(image)
@@ -40,12 +40,12 @@ def sendEmail(image):
     server.quit()
 
 def emailAlertCb(request):
-    rospy.wait_for_service("/image_saver/save")
+    """rospy.wait_for_service("/image_saver/save")
     save_image = rospy.ServiceProxy("/image_saver/save", Empty, persistent=True)
-    save_image()
-    image_file = getImageFile()
-    print(image_file)
-    #sendEmail(image_file)
+    save_image()"""
+    image_file_ = getImageFile()
+    image = MIMEImage(open(image_file_, "rb").read(), name=os.path.basename(image_file_))
+    sendEmail(image)
     return EmptyResponse()
 
 def emailAlertServer():
