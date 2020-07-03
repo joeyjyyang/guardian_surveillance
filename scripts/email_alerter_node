@@ -49,8 +49,8 @@ def emailAlertCb(request):
     return EmptyResponse()
 
 def emailAlertServer():
-    rospy.init_node("email_alert_node")
-    email_alert_server = rospy.Service("email_alert", Empty, emailAlertCb)
+    rospy.init_node("email_alerter_node")
+    email_alert_server = rospy.Service("email_alerter", Empty, emailAlertCb)
     rospy.spin()
 
 if __name__ == '__main__':

@@ -59,20 +59,20 @@ include_directories(
   ${OpenCV_INCLUDE_DIRS}
 )
 
-add_executable(intruder_detect_node src/intruder_detect_node.cpp)
+add_executable(intruder_detecter_node src/intruder_detecter_node.cpp)
 
 # set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME node PREFIX "")
 
-target_link_libraries(intruder_detect_node
+target_link_libraries(intruder_detecter_node
   ${catkin_LIBRARIES}
   ${OpenCV_LIBRARIES}
 )
 
-add_dependencies(intruder_detect_node guardian_surveillance_generate_messages_cpp)
+#add_dependencies(intruder_detect_node guardian_surveillance_generate_messages_cpp)
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
 catkin_install_python(
-  PROGRAMS scripts/email_alert_node
+  PROGRAMS scripts/email_alerter_node
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

@@ -7,7 +7,7 @@
     <arg name="enable_raw" value="$(arg enable_raw)"/>
   </include>
 
-  <node name="intruder_detect_node" pkg="guardian_surveillance" type="intruder_detect_node" respawn="false" output="screen"/> 
+  <node name="intruder_detecter_node" pkg="guardian_surveillance" type="intruder_detecter_node" respawn="false" output="screen"/> 
 
   <node name="image_saver" pkg="image_view" type="image_saver" respawn="false" output="screen">
     <remap from="/image" to="raspicam_node/image"/> 
@@ -15,6 +15,6 @@
     <param name="filename_format" type="string" value="/home/ubuntu/catkin_ws/src/guardian_surveillance/media/image_%04d.%s"/> 
   </node>
 
-  <node name="email_alert_node" pkg="guardian_surveillance" type="email_alert_node" respawn="false" output="screen"/>
+  <node name="email_alerter_node" pkg="guardian_surveillance" type="email_alerter_node" respawn="false" output="screen"/>
 
 </launch>

@@ -20,8 +20,10 @@ class ImageProcessor
 {
   ros::NodeHandle nh_;
   ros::Subscriber image_sub_;
-  ros::ServiceClient email_alert_client_;
-  std_srvs::Empty email_alert_srv_;
+  ros::ServiceClient image_saver_client_;
+  ros::ServiceClient email_alerter_client_;
+  std_srvs::Empty image_saver_srv_;
+  std_srvs::Empty email_alerter_srv_;
   std::vector<cv::Rect> faces_;
   int face_count_;
  
@@ -29,7 +31,8 @@ public:
   ImageProcessor(const ros::NodeHandle& nh) : nh_(nh), face_count_(0)
   {
     image_sub_ = nh_.subscribe("/raspicam_node/image/compressed", 1, &ImageProcessor::imageCb, this);
-    email_alert_client_ = nh_.serviceClient<std_srvs::Empty>("email_alert");
+    image_saver_client_ = nh_.serviceClient<std_srvs::Empty>("/image_saver/save");
+    email_alerter_client_ = nh_.serviceClient<std_srvs::Empty>("email_alert");
     cv::namedWindow(OPENCV_WINDOW);
   }
 
@@ -52,13 +55,14 @@ public:
     {
       face_count_ = faces_.size();
       ROS_INFO("Warning! Intruder(s) Detected!");
-      if (email_alert_client_.call(email_alert_srv_))
+      if (image_saver_client_.call(image_saver_srv_))
+      //if (email_alerter_client_.call(email_alert_srv_))
       {
         ROS_INFO("IMAGE SAVED");
       }
       else
       {
-        ROS_ERROR("FAILED TO CALL SERVICE email_alert");
+        ROS_ERROR("FAILED TO CALL SERVICE");
       }
     }
     
@@ -82,7 +86,7 @@ int main(int argc, char* argv[])
     return -1;
   }
 
-  ros::init(argc, argv, "intruder_detect_node");
+  ros::init(argc, argv, "intruder_detecter_node");
   ros::NodeHandle nh;
   ImageProcessor ip(nh);
   ros::spin();
