@@ -32,7 +32,7 @@ public:
   {
     image_sub_ = nh_.subscribe("/raspicam_node/image/compressed", 1, &ImageProcessor::imageCb, this);
     image_saver_client_ = nh_.serviceClient<std_srvs::Empty>("/image_saver/save");
-    email_alerter_client_ = nh_.serviceClient<std_srvs::Empty>("email_alert");
+    email_alerter_client_ = nh_.serviceClient<std_srvs::Empty>("email_alerter");
     cv::namedWindow(OPENCV_WINDOW);
   }
 
@@ -51,19 +51,30 @@ public:
 
     face_cascade.detectMultiScale(frame_gray, faces_);
     
+    if (faces_.empty())
+    {
+      face_count_ = 0;
+    }
     if (!faces_.empty() && faces_.size() != face_count_)
     {
       face_count_ = faces_.size();
       ROS_INFO("Warning! Intruder(s) Detected!");
       if (image_saver_client_.call(image_saver_srv_))
-      //if (email_alerter_client_.call(email_alert_srv_))
       {
-        ROS_INFO("IMAGE SAVED");
+        ros::Duration(1.0).sleep();
+	if (email_alerter_client_.call(email_alerter_srv_))
+        {
+	  ROS_INFO("Image emailed.");
+        }
+        else
+        {
+          ROS_ERROR("Failed to call email_alerter service.");
+        }
       }
       else
       {
-        ROS_ERROR("FAILED TO CALL SERVICE");
-      }
+        ROS_ERROR("Failed to call image_saver service.");
+     }
     }
     
     for (size_t i = 0; i < faces_.size(); i++)

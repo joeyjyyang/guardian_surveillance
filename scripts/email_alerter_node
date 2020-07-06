@@ -40,12 +40,11 @@ def sendEmail(image):
     server.quit()
 
 def emailAlertCb(request):
-    """rospy.wait_for_service("/image_saver/save")
-    save_image = rospy.ServiceProxy("/image_saver/save", Empty, persistent=True)
-    save_image()"""
     image_file_ = getImageFile()
     image = MIMEImage(open(image_file_, "rb").read(), name=os.path.basename(image_file_))
     sendEmail(image)
+    log_msg = "Emailed image %s"%image_file_
+    rospy.loginfo(log_msg)
     return EmptyResponse()
 
 def emailAlertServer():
