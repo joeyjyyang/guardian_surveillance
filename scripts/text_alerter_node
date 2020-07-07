@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+
+import rospy
+from std_srvs.srv import Empty, EmptyResponse
+
+import os
+from twilio.rest import Client
+
+account_sid = os.environ['TWILIO_ACCOUNT_SID']
+auth_token = os.environ['TWILIO_AUTH_TOKEN']
+
+client = Client(account_sid, auth_token)
+client.messages.create(
+  to = "+16479663926",
+  from_ = "+16475030604",
+  body = "ALERT: INTRUDER DETECTED BY GUARDIAN SURVEILLANCE"
+)
+
+def textAlertCb(request):
+  return EmptyResponse()
+  
+
+def textAlertServer():
+  rospy.init_node("text_alerter_node")
+  text_alert_server = rospy.Service("text_alerter", Empty, textAlertCb)
+  rospy.spin()
+
+if __name__ == '__main__':
+  textAlertServer()
