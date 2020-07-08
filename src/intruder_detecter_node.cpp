@@ -22,8 +22,10 @@ class ImageProcessor
   ros::Subscriber image_sub_;
   ros::ServiceClient image_saver_client_;
   ros::ServiceClient email_alerter_client_;
+  ros::ServiceClient text_alerter_client_;
   std_srvs::Empty image_saver_srv_;
   std_srvs::Empty email_alerter_srv_;
+  std_srvs::Empty text_alerter_srv_;
   std::vector<cv::Rect> faces_;
   int face_count_;
  
@@ -33,6 +35,7 @@ public:
     image_sub_ = nh_.subscribe("/raspicam_node/image/compressed", 1, &ImageProcessor::imageCb, this);
     image_saver_client_ = nh_.serviceClient<std_srvs::Empty>("/image_saver/save");
     email_alerter_client_ = nh_.serviceClient<std_srvs::Empty>("email_alerter");
+    text_alerter_client_ = nh_.serviceClient<std_srvs::Empty>("text_alerter");
     cv::namedWindow(OPENCV_WINDOW);
   }
 
@@ -62,9 +65,10 @@ public:
       if (image_saver_client_.call(image_saver_srv_))
       {
         ros::Duration(1.0).sleep();
+        ROS_INFO("Snapshot of intruder saved.");
 	if (email_alerter_client_.call(email_alerter_srv_))
         {
-	  ROS_INFO("Image emailed.");
+	  ROS_INFO("Email alert sent.");
         }
         else
         {
@@ -74,7 +78,15 @@ public:
       else
       {
         ROS_ERROR("Failed to call image_saver service.");
-     }
+      }
+      if (text_alerter_client_.call(text_alerter_srv_))
+      {
+        ROS_INFO("Text alert sent.");
+      }
+      else
+      {
+        ROS_ERROR("Failed to call text_alerter service.");
+      }
     }
     
     for (size_t i = 0; i < faces_.size(); i++)

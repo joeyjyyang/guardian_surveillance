@@ -17,4 +17,6 @@
 
   <node name="email_alerter_node" pkg="guardian_surveillance" type="email_alerter_node" respawn="false" output="screen"/>
 
+  <node name="text_alerter_node" pkg="guardian_surveillance" type="text_alerter_node" respawn="false" output="screen"/>
+
 </launch>
