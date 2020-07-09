@@ -44,6 +44,19 @@ public:
     cv::destroyWindow(OPENCV_WINDOW);
   }
 
+  void showStream(cv::Mat& cv_image)
+  {
+    // Draw circle around face(s).
+    for (size_t i = 0; i < faces_.size(); i++)
+    {
+      cv::Point center(faces_[i].x + faces_[i].width/2, faces_[i].y + faces_[i].height/2);
+      cv::ellipse(cv_image, center, cv::Size(faces_[i].width/2, faces_[i].height/2), 0, 0, 360, cv::Scalar(255, 0, 255), 4);
+    }
+	
+    cv::imshow(OPENCV_WINDOW, cv_image);
+    cv::waitKey(3);
+  }
+
   void imageCb(const sensor_msgs::CompressedImageConstPtr& msg)
   {
     // Convert ROS image msg to OpenCV image.
@@ -96,16 +109,8 @@ public:
         ROS_ERROR("Failed to call text_alerter service.");
       }
     }
-    
-    // Draw circle around each face detected.
-    for (size_t i = 0; i < faces_.size(); i++)
-    {
-      cv::Point center(faces_[i].x + faces_[i].width/2, faces_[i].y + faces_[i].height/2);
-      cv::ellipse(cv_image, center, cv::Size(faces_[i].width/2, faces_[i].height/2), 0, 0, 360, cv::Scalar(255, 0, 255), 4);
-    }
-	
-    cv::imshow(OPENCV_WINDOW, cv_image);
-    cv::waitKey(3);
+    // Show surveillance camera feed.
+    showStream(cv_image);
   }
 };
 
