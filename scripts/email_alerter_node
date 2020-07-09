@@ -11,9 +11,9 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 
-sender_email_ = "guardiansurveillance.ai@gmail.com"
-sender_password_ = "t2vqh97u"
-receiver_email_ = "joeyyang.ai@gmail.com"
+sender_email_ = os.environ["SYSTEM_EMAIL_ADDRESS"]
+sender_password_ = os.environ["SYSTEM_EMAIL_PASSWORD"]
+receiver_email_ = os.environ["USER_EMAIL_ADDRESS"]
 starttls_port_ = 587
 smtp_server_ = "smtp.gmail.com"
 
