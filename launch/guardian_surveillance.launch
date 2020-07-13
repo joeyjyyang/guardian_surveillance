@@ -2,12 +2,15 @@
 <launch>
  
   <arg name="enable_raw" default="true"/>
+  <arg name="show_stream" default="true"/>
  
   <include file="$(find raspicam_node)/launch/camerav2_1280x960_10fps.launch">
     <arg name="enable_raw" value="$(arg enable_raw)"/>
   </include>
 
-  <node name="intruder_detecter_node" pkg="guardian_surveillance" type="intruder_detecter_node" respawn="false" output="screen"/> 
+  <node name="intruder_detecter_node" pkg="guardian_surveillance" type="intruder_detecter_node" respawn="false" output="screen">
+    <param name="show_stream" type="bool" value="$(arg show_stream)"/>
+  </node>
 
   <node name="image_saver" pkg="image_view" type="image_saver" respawn="false" output="screen">
     <remap from="/image" to="raspicam_node/image"/> 

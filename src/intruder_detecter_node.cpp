@@ -28,6 +28,7 @@ class ImageProcessor
   std_srvs::Empty text_alerter_srv_;
   std::vector<cv::Rect> faces_;
   int face_count_;
+  bool show_stream_;
  
 public:
   ImageProcessor(const ros::NodeHandle& nh) : nh_(nh), face_count_(0)
@@ -110,7 +111,10 @@ public:
       }
     }
     // Show surveillance camera feed.
-    showStream(cv_image);
+    if (nh_.getParam("show_stream", show_stream_))
+    {
+      showStream(cv_image);
+    }
   }
 };
 
@@ -123,7 +127,7 @@ int main(int argc, char* argv[])
   }
 
   ros::init(argc, argv, "intruder_detecter_node");
-  ros::NodeHandle nh;
+  ros::NodeHandle nh("~");
   ImageProcessor ip(nh);
   ros::spin();
  
