@@ -20,8 +20,15 @@ cd ..
 catkin_make # catkin build guardian_surveillance (if using catkin_tools)
 source devel/setup.bash
 ```
-### Example Usage
-```
-roslaunch guardian_surveillance surveillance_system.launch
-```
+## Nodes
+- `intruder_detecter_node`
+- `email_alerter_node`
+- `text_alerter_node`
+
+## Parameters
+- `/intruder_detecter_node/show_stream`
+
+## Example Usage
+`roslaunch guardian_surveillance surveillance_system.launch`
+
 
