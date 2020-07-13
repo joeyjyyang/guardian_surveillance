@@ -111,7 +111,8 @@ public:
       }
     }
     // Show surveillance camera feed.
-    if (nh_.getParam("show_stream", show_stream_))
+    nh_.getParam("show_stream", show_stream_);
+    if (show_stream_)
     {
       showStream(cv_image);
     }

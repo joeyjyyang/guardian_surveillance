@@ -29,6 +29,6 @@ source devel/setup.bash
 - `/intruder_detecter_node/show_stream`
 
 ## Example Usage
-`roslaunch guardian_surveillance surveillance_system.launch`
+`roslaunch guardian_surveillance surveillance_system.launch show_stream:=true`
 
 
