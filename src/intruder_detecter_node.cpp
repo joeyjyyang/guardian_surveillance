@@ -35,14 +35,22 @@ public:
   {
     image_sub_ = nh_.subscribe("/raspicam_node/image/compressed", 1, &ImageProcessor::imageCb, this);
     image_saver_client_ = nh_.serviceClient<std_srvs::Empty>("/image_saver/save");
-    email_alerter_client_ = nh_.serviceClient<std_srvs::Empty>("email_alerter");
-    text_alerter_client_ = nh_.serviceClient<std_srvs::Empty>("text_alerter");
-    cv::namedWindow(OPENCV_WINDOW);
+    email_alerter_client_ = nh_.serviceClient<std_srvs::Empty>("/email_alerter");
+    text_alerter_client_ = nh_.serviceClient<std_srvs::Empty>("/text_alerter"); 
+    
+    nh_.getParam("show_stream", show_stream_);
+    if (show_stream_)
+    {
+      cv::namedWindow(OPENCV_WINDOW);
+    }
   }
 
   ~ImageProcessor()
   {
-    cv::destroyWindow(OPENCV_WINDOW);
+    if (show_stream_)
+    {
+      cv::destroyWindow(OPENCV_WINDOW);
+    }
   }
 
   void showStream(cv::Mat& cv_image)
@@ -111,8 +119,7 @@ public:
       }
     }
     // Show surveillance camera feed.
-    nh_.getParam("show_stream", show_stream_);
-    if (show_stream_)
+   if (show_stream_)
     {
       showStream(cv_image);
     }
