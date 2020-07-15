@@ -19,6 +19,7 @@ git clone --single-branch --branch kinetic-devel https://github.com/joeyjyyang/g
 cd .. 
 catkin_make # catkin build guardian_surveillance (if using catkin_tools)
 source devel/setup.bash
+source ~/.bashrc # get email and text credentials
 ```
 ## Nodes
 - `intruder_detecter_node`
