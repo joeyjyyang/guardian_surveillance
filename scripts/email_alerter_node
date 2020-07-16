@@ -13,7 +13,7 @@ from email.mime.image import MIMEImage
 
 sender_email_ = os.environ["SYSTEM_EMAIL_ADDRESS"]
 sender_password_ = os.environ["SYSTEM_EMAIL_PASSWORD"]
-receiver_email_ = os.environ["USER_EMAIL_ADDRESS"]
+receiver_email_ = rospy.get_param("/user_info/user_email_address")
 starttls_port_ = 587
 smtp_server_ = "smtp.gmail.com"
 

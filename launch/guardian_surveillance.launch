@@ -3,7 +3,11 @@
  
   <arg name="enable_raw" default="true"/>
   <arg name="show_stream" default="false"/>
- 
+
+  <group ns="user_info">
+    <rosparam command="load" file="$(find my_package)/config/user_info.yaml"/>
+  </group>
+
   <include file="$(find raspicam_node)/launch/camerav2_1280x960_10fps.launch">
     <arg name="enable_raw" value="$(arg enable_raw)"/>
   </include>

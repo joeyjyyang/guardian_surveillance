@@ -6,6 +6,9 @@ from std_srvs.srv import Empty, EmptyResponse
 import os
 from twilio.rest import Client
 
+sender_phone_ = os.environ["SYSTEM_PHONE_NUMBER"]
+receiver_phone_ = rospy.get_param("/user_info/user_phone_number")
+
 account_sid_ = os.environ["SYSTEM_ACCOUNT_SID"]
 auth_token_ = os.environ["SYSTEM_AUTH_TOKEN"]
 
@@ -13,8 +16,8 @@ client_ = Client(account_sid_, auth_token_)
 
 def textAlertCb(request):
   client_.messages.create(
-    to = os.environ["USER_PHONE_NUMBER"],
-    from_ = os.environ["SYSTEM_PHONE_NUMBER"],
+    to = receiver_phone_,
+    from_ = sender_phone_,
     body = "ALERT: INTRUDER DETECTED BY GUARDIAN SURVEILLANCE"
   )
   return EmptyResponse()
