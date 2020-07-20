@@ -40,6 +40,7 @@ rospack profile
 - `/intruder_detecter_node/show_stream` (bool): Show image processed camera feed with intruder detection.
 
 ## Usage
+- Set up user email and phone number in `/config/user_info.yaml`
 ### Example 
 - `roslaunch guardian_surveillance surveillance_system.launch
 

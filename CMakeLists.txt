@@ -8,9 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   sensor_msgs
   std_srvs
-  #cv_bridge
-  #raspicam_node
-  #image_view
+  cv_bridge
   message_generation
 )
 
@@ -18,13 +16,6 @@ find_package(OpenCV REQUIRED)
 
 catkin_package(
   CATKIN_DEPENDS 
-  roscpp 
-  rospy 
-  sensor_msgs 
-  std_srvs 
-  #cv_bridge 
-  #raspicam_node 
-  #image_view 
   message_runtime
 )
 
