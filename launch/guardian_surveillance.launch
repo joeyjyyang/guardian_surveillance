@@ -5,7 +5,7 @@
   <arg name="show_stream" default="false"/>
 
   <group ns="user_info">
-    <rosparam command="load" file="$(find my_package)/config/user_info.yaml"/>
+    <rosparam command="load" file="$(find guardian_surveillance)/config/user_info.yaml"/>
   </group>
 
   <include file="$(find raspicam_node)/launch/camerav2_1280x960_10fps.launch">
