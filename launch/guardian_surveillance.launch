@@ -2,7 +2,7 @@
 <launch>
  
   <arg name="enable_raw" default="true"/>
-  <arg name="show_stream" default="false"/>
+  <arg name="show_stream" default="true"/>
 
   <group ns="user_info">
     <rosparam command="load" file="$(find guardian_surveillance)/config/user_info.yaml"/>

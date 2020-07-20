@@ -37,20 +37,12 @@ public:
     image_saver_client_ = nh_.serviceClient<std_srvs::Empty>("/image_saver/save");
     email_alerter_client_ = nh_.serviceClient<std_srvs::Empty>("/email_alerter");
     text_alerter_client_ = nh_.serviceClient<std_srvs::Empty>("/text_alerter"); 
-    
-    nh_.getParam("show_stream", show_stream_);
-    if (show_stream_)
-    {
-      cv::namedWindow(OPENCV_WINDOW);
-    }
+    cv::namedWindow(OPENCV_WINDOW);
   }
 
   ~ImageProcessor()
   {
-    if (show_stream_)
-    {
-      cv::destroyWindow(OPENCV_WINDOW);
-    }
+    cv::destroyWindow(OPENCV_WINDOW);
   }
 
   void showStream(cv::Mat& cv_image)
@@ -70,7 +62,7 @@ public:
   {
     // Convert ROS image msg to OpenCV image.
     cv::Mat cv_image = cv::imdecode(cv::Mat(msg->data), 1); 
-
+    
     cv::Mat frame_gray;
     cv::cvtColor(cv_image, frame_gray, cv::COLOR_BGR2GRAY);
     cv::equalizeHist(frame_gray, frame_gray);
@@ -84,7 +76,7 @@ public:
       face_count_ = 0;
     }
     // Check if intruder(s) detected.
-    if (!faces_.empty() && faces_.size() != face_count_)
+    /*if (!faces_.empty() && faces_.size() != face_count_)
     {
       face_count_ = faces_.size();
       ROS_INFO("Warning! Intruder(s) Detected!");
@@ -117,9 +109,10 @@ public:
       {
         ROS_ERROR("Failed to call text_alerter service.");
       }
-    }
+    }*/
     // Show surveillance camera feed.
-   if (show_stream_)
+    nh_.getParam("show_stream", show_stream_);
+    if (show_stream_)
     {
       showStream(cv_image);
     }

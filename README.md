@@ -31,9 +31,9 @@ rospack profile
 - `text_alerter_node`
 
 ## Parameters
-- `/intruder_detecter_node/show_stream`
+- `/intruder_detecter_node/show_stream` (bool): Show image processed camera feed with intruder detection.
 
 ## Example Usage
-`roslaunch guardian_surveillance surveillance_system.launch show_stream:=true`
+`roslaunch guardian_surveillance surveillance_system.launch
 
 
