@@ -76,7 +76,7 @@ public:
       face_count_ = 0;
     }
     // Check if intruder(s) detected.
-    /*if (!faces_.empty() && faces_.size() != face_count_)
+    if (!faces_.empty() && faces_.size() != face_count_)
     {
       face_count_ = faces_.size();
       ROS_INFO("Warning! Intruder(s) Detected!");
@@ -109,7 +109,7 @@ public:
       {
         ROS_ERROR("Failed to call text_alerter service.");
       }
-    }*/
+    }
     // Show surveillance camera feed.
     nh_.getParam("show_stream", show_stream_);
     if (show_stream_)
