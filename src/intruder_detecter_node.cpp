@@ -101,14 +101,14 @@ public:
         ROS_ERROR("Failed to call image_saver service.");
       }
       // Send text alert.
-      /*if (text_alerter_client_.call(text_alerter_srv_))
+      if (text_alerter_client_.call(text_alerter_srv_))
       {
         ROS_INFO("Text alert sent.");
       }
       else
       {
         ROS_ERROR("Failed to call text_alerter service.");
-      }*/
+      }
     }
     // Show surveillance camera feed.
     nh_.getParam("show_stream", show_stream_);

@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <launch>
- 
   <arg name="enable_raw" default="true"/>
   <arg name="show_stream" default="true"/>
 
@@ -24,6 +23,5 @@
 
   <node name="email_alerter_node" pkg="guardian_surveillance" type="email_alerter_node" respawn="false" output="screen"/>
 
-  <!--<node name="text_alerter_node" pkg="guardian_surveillance" type="text_alerter_node" respawn="false" output="screen"/>
--->
+  <node name="text_alerter_node" pkg="guardian_surveillance" type="text_alerter_node" respawn="false" output="screen"/>
 </launch>
