@@ -42,7 +42,7 @@ rospack profile
 ## Usage
 - Set up user email and phone number in `/config/user_info.yaml`
 ### Example 
-- `roslaunch guardian_surveillance surveillance_system.launch
+- `roslaunch guardian_surveillance surveillance_system.launch`
 
 ## Contact
 - ROS package author and maintainer: Joey Yang
