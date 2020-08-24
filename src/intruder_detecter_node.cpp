@@ -16,20 +16,10 @@ cv::CascadeClassifier face_cascade;
 
 static const std::string OPENCV_WINDOW = "Guardian Surveillance";
 
+namespace guardian_surveillance
+{
 class ImageProcessor
 {
-  ros::NodeHandle nh_;
-  ros::Subscriber image_sub_;
-  ros::ServiceClient image_saver_client_;
-  ros::ServiceClient email_alerter_client_;
-  ros::ServiceClient text_alerter_client_;
-  std_srvs::Empty image_saver_srv_;
-  std_srvs::Empty email_alerter_srv_;
-  std_srvs::Empty text_alerter_srv_;
-  std::vector<cv::Rect> faces_;
-  int face_count_;
-  bool show_stream_;
- 
 public:
   ImageProcessor(const ros::NodeHandle& nh) : nh_(nh), face_count_(0)
   {
@@ -117,7 +107,20 @@ public:
       showStream(cv_image);
     }
   }
+private:
+  ros::NodeHandle nh_;
+  ros::Subscriber image_sub_;
+  ros::ServiceClient image_saver_client_;
+  ros::ServiceClient email_alerter_client_;
+  ros::ServiceClient text_alerter_client_;
+  std_srvs::Empty image_saver_srv_;
+  std_srvs::Empty email_alerter_srv_;
+  std_srvs::Empty text_alerter_srv_;
+  std::vector<cv::Rect> faces_;
+  int face_count_;
+  bool show_stream_;
 };
+} // namespace guardian_surveillance
 
 int main(int argc, char* argv[])
 {
@@ -129,7 +132,7 @@ int main(int argc, char* argv[])
 
   ros::init(argc, argv, "intruder_detecter_node");
   ros::NodeHandle nh("~");
-  ImageProcessor ip(nh);
+  guardian_surveillance::ImageProcessor ip(nh);
   ros::spin();
  
   return 0;
