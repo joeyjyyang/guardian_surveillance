@@ -45,7 +45,7 @@ rospack profile
 - `roslaunch guardian_surveillance surveillance_system.launch`
 
 ## Contact
-- ROS package author and maintainer: Joey Yang
+- Author and Maintainer: Joey Yang
 - Email: joeyyang.ai@gmail.com
 - GitHub: https://github.com/joeyjyyang
 - LinkedIn: https://www.linkedin.com/in/joey-yang
