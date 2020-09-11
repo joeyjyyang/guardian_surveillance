@@ -2,7 +2,7 @@
 <package format="2">
   <name>guardian_surveillance</name>
   <version>0.0.0</version>
-  <description>An intelligent home surveillence system embedded on the Raspberry Pi 4 Model B and implemented in the ROS ecosystem.</description>
+  <description>A ROS package containing a lightweight and intelligent surveillence system embedded on the Raspberry Pi 4 Model B and implemented in the ROS ecosystem.</description>
 
   <maintainer email="joeyyang.ai@gmail.com">Joey Yang</maintainer>
   <author email="joeyyang.ai@gmail.com">Joey Yang</author>
