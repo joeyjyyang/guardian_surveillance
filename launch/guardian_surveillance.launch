@@ -21,7 +21,7 @@
     <param name="filename_format" type="string" value="/home/ubuntu/catkin_ws/src/guardian_surveillance/media/image_%04d.%s"/> 
   </node>
 
-  <node name="email_alerter_node" pkg="guardian_surveillance" type="email_alerter_node" respawn="false" output="screen"/>
+  <node name="email_alerter_node" pkg="guardian_surveillance" type="email_alerter_node.py" respawn="false" output="screen"/>
 
-  <node name="text_alerter_node" pkg="guardian_surveillance" type="text_alerter_node" respawn="false" output="screen"/>
+  <node name="text_alerter_node" pkg="guardian_surveillance" type="text_alerter_node.py" respawn="false" output="screen"/>
 </launch>

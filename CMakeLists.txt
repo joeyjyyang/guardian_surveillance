@@ -32,6 +32,6 @@ target_link_libraries(intruder_detecter_node
 )
 
 catkin_install_python(
-  PROGRAMS scripts/email_alerter_node scripts/text_alerter_node
+  PROGRAMS scripts/email_alerter_node.py scripts/text_alerter_node.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
