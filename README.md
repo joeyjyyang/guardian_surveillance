@@ -31,6 +31,18 @@ source ~/.bashrc # get email and text credentials
 rospack profile
 ```
 
+## Setup
+1. Enter email address and phone number (to receive alerts) in `/config/user_info.yaml`.
+2. Create Twilio account: https://www.twilio.com/. The phone number generated will be used to send SMS text message alerts to the user.
+3. Set private email and phone (Twilio) credentials as environment variables (i.e. to ~/.bashrc):
+```
+export SYSTEM_EMAIL_ADDRESS = <fill> # email address that will send email alert to user along with attached image of intruder
+export SYSTEM_EMAIL_PASSWORD = <fill> 
+export SYSTEM_PHONE_NUMBER = <fill> # phone number from Twilio that will send SMS text message alert to user
+export SYSTEM_ACCOUNT_SID = <fill> # account SID from Twilio
+export SYSTEM_AUTH_TOKEN = <fill> # authentication token from Twilio
+```
+
 ## Nodes
 - `intruder_detecter_node`
 - `email_alerter_node`
@@ -40,7 +52,6 @@ rospack profile
 - `/intruder_detecter_node/show_stream` (bool): Show image processed camera feed with intruder detection.
 
 ## Usage
-- Set up user email and phone number in `/config/user_info.yaml`
 ### Example 
 - `roslaunch guardian_surveillance surveillance_system.launch`
 
@@ -49,8 +60,4 @@ rospack profile
 - Email: joeyyang.ai@gmail.com
 - GitHub: https://github.com/joeyjyyang
 - LinkedIn: https://www.linkedin.com/in/joey-yang
-
-## To Do:
-- Add instructions on setting up Twilio account and exporting credentials as environment variables.
-- Adding author and description comments to each source file.
 
