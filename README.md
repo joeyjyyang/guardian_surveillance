@@ -50,3 +50,7 @@ rospack profile
 - GitHub: https://github.com/joeyjyyang
 - LinkedIn: https://www.linkedin.com/in/joey-yang
 
+## To Do:
+- Add instructions on setting up Twilio account and exporting credentials as environment variables.
+- Adding author and description comments to each source file.
+
