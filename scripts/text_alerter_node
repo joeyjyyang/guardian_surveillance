@@ -1,3 +1,11 @@
+'''
+  Author: Joey Yang
+  Email: joeyyang.ai@gmail.com
+  Description: 
+    ROS node that exposes the text_alerter ROS service, which sends the user 
+    an SMS text message upon intruder detection using the Twilio API.
+'''
+
 #!/usr/bin/env python
 
 import rospy

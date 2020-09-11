@@ -1,3 +1,12 @@
+'''
+  Author: Joey Yang
+  Email: joeyyang.ai@gmail.com
+  Description: 
+    ROS node that exposes the email_alerter ROS service, which gets the latest 
+    media (.jpg) file taken by the camera of the intruder, and sends an email
+    with the photo attached to the user's gmail account via SMTP.
+'''
+
 #!/usr/bin/env python
 
 import rospy
@@ -27,31 +36,31 @@ text_ = MIMEText("Warning! Intruder(s) Detected!")
 msg_.attach(text_)
 
 def getImageFile():
-    all_image_files = glob.glob("/home/ubuntu/catkin_ws/src/guardian_surveillance/media/*.jpg")
-    image_file_ = max(all_image_files, key=os.path.getctime)   
-    return image_file_
+  all_image_files = glob.glob("/home/ubuntu/catkin_ws/src/guardian_surveillance/media/*.jpg")
+  image_file_ = max(all_image_files, key=os.path.getctime)   
+  return image_file_
 
 def sendEmail(image):
-    msg_.attach(image)
-    server = smtplib.SMTP(smtp_server_, starttls_port_)
-    server.starttls()
-    server.login(sender_email_, sender_password_)
-    server.sendmail(sender_email_, receiver_email_, msg_.as_string())
-    server.quit()
+  msg_.attach(image)
+  server = smtplib.SMTP(smtp_server_, starttls_port_)
+  server.starttls()
+  server.login(sender_email_, sender_password_)
+  server.sendmail(sender_email_, receiver_email_, msg_.as_string())
+  server.quit()
 
 def emailAlertCb(request):
-    image_file_ = getImageFile()
-    image = MIMEImage(open(image_file_, "rb").read(), name=os.path.basename(image_file_))
-    sendEmail(image)
-    log_msg = "Emailed image %s"%image_file_
-    rospy.loginfo(log_msg)
-    return EmptyResponse()
+  image_file_ = getImageFile()
+  image = MIMEImage(open(image_file_, "rb").read(), name=os.path.basename(image_file_))
+  sendEmail(image)
+  log_msg = "Emailed image %s"%image_file_
+  rospy.loginfo(log_msg)
+  return EmptyResponse()
 
 def emailAlertServer():
-    rospy.init_node("email_alerter_node")
-    email_alert_server = rospy.Service("email_alerter", Empty, emailAlertCb)
-    rospy.spin()
+  rospy.init_node("email_alerter_node")
+  email_alert_server = rospy.Service("email_alerter", Empty, emailAlertCb)
+  rospy.spin()
 
 if __name__ == '__main__':
-    emailAlertServer()
+  emailAlertServer()
    

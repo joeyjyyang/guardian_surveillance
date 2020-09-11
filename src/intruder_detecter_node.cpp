@@ -1,3 +1,15 @@
+/*
+  Author: Joey Yang
+  Email: joeyyang.ai@gmail.com
+  Description: 
+    ROS node that leverages the OpenCV library to perform image processing
+    on the camera's video stream. Upon intruder detection, an image is saved
+    using the image_saver/save service; the image is then emailed to the 
+    user via the email_alerter service. Finally, the user is also notified
+    through SMS text messaging from the text_alerter service.
+*/
+
+
 #include <ros/ros.h>
 #include <cv_bridge/cv_bridge.h>
 #include <sensor_msgs/image_encodings.h>
