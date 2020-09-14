@@ -20,9 +20,6 @@
 #include <opencv2/objdetect.hpp>
 #include <opencv2/videoio.hpp>
 
-#include <iostream>
-#include <stdio.h>
-
 std::string face_cascade_name = "/opt/ros/kinetic/share/OpenCV-3.3.1-dev/haarcascades/haarcascade_frontalface_alt.xml";
 cv::CascadeClassifier face_cascade;
 
@@ -138,7 +135,7 @@ int main(int argc, char* argv[])
 {
   if (!face_cascade.load(face_cascade_name))
   {
-    std::cout << "Error: Unable to locate Haar Cascade xml files!" << std::endl;
+    ROS_ERROR("Unable to locate Haar Cascade xml files!");
     return -1;
   }
 
