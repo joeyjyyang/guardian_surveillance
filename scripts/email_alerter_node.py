@@ -37,8 +37,8 @@ msg_.attach(text_)
 
 def getImageFile():
   all_image_files = glob.glob("/home/ubuntu/catkin_ws/src/guardian_surveillance/media/*.jpg")
-  image_file_ = max(all_image_files, key=os.path.getctime)   
-  return image_file_
+  image_file = max(all_image_files, key=os.path.getctime)   
+  return image_file
 
 def sendEmail(image):
   msg_.attach(image)
@@ -49,10 +49,10 @@ def sendEmail(image):
   server.quit()
 
 def emailAlertCb(request):
-  image_file_ = getImageFile()
-  image = MIMEImage(open(image_file_, "rb").read(), name=os.path.basename(image_file_))
+  image_file = getImageFile()
+  image = MIMEImage(open(image_file, "rb").read(), name=os.path.basename(image_file))
   sendEmail(image)
-  log_msg = "Emailed image %s"%image_file_
+  log_msg = "Emailed image %s"%image_file
   rospy.loginfo(log_msg)
   return EmptyResponse()
 
