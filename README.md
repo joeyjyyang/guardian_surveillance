@@ -24,6 +24,7 @@ cd ~/catkin_ws/src
 git clone --single-branch --branch kinetic-devel https://github.com/joeyjyyang/guardian_surveillance.git
 cd .. 
 sudo apt-get install -y
+sudo apt-get install -y libgtk2.0-dev # ros-kinetic-image-view dependency
 rosdep install --from-paths src --ignore-src --rosdistro=kinetic -y
 catkin_make # catkin build guardian_surveillance (if using catkin_tools)
 source devel/setup.bash
